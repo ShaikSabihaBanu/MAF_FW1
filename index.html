@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AssetVault - Multi-Asset Portfolio Management</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="brand">
+                <i class="fas fa-chart-line"></i>
+                <span>AssetVault</span>
+            </div>
+            <div class="vendor-info">
+                <div class="vendor-avatar">VM</div>
+                <div class="vendor-details">
+                    <div class="vendor-name">Vendor Manager</div>
+                    <div class="vendor-role">Portfolio Admin</div>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-page="dashboard">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" class="nav-item" data-page="clients">
+                <i class="fas fa-users"></i>
+                <span>Clients</span>
+                <span class="badge">24</span>
+            </a>
+            <a href="#" class="nav-item" data-page="portfolio">
+                <i class="fas fa-briefcase"></i>
+                <span>Portfolios</span>
+            </a>
+            <a href="#" class="nav-item" data-page="transactions">
+                <i class="fas fa-exchange-alt"></i>
+                <span>Transactions</span>
+            </a>
+            <a href="#" class="nav-item" data-page="analytics">
+                <i class="fas fa-chart-pie"></i>
+                <span>Analytics</span>
+            </a>
+            <a href="#" class="nav-item" data-page="reports">
+                <i class="fas fa-file-alt"></i>
+                <span>Reports</span>
+            </a>
+            <a href="#" class="nav-item" data-page="settings">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="#" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search clients, portfolios, transactions...">
+                </div>
+            </div>
+            <div class="top-bar-right">
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">5</span>
+                </div>
+                <div class="date-display">
+                    <i class="far fa-calendar"></i>
+                    <span id="currentDate"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-area" id="contentArea">
+            <!-- Dashboard Page -->
+            <div class="page-content" id="dashboard-page">
+                <!-- Summary Cards -->
+                <div class="summary-cards">
+                    <div class="summary-card card-blue">
+                        <div class="card-icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-label">Total AUM</div>
+                            <div class="card-value" id="totalAUM">₹0</div>
+                            <div class="card-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+12.5% from last month</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="summary-card card-green">
+                        <div class="card-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-label">Active Clients</div>
+                            <div class="card-value" id="activeClients">0</div>
+                            <div class="card-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+3 new this month</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="summary-card card-purple">
+                        <div class="card-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-label">Avg. Returns</div>
+                            <div class="card-value" id="avgReturns">0%</div>
+                            <div class="card-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+2.1% YoY</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="summary-card card-orange">
+                        <div class="card-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-label">Transactions Today</div>
+                            <div class="card-value" id="transactionsToday">0</div>
+                            <div class="card-change negative">
+                                <i class="fas fa-arrow-down"></i>
+                                <span>-5 from yesterday</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-section">
+                    <div class="chart-container large-chart">
+                        <div class="chart-header">
+                            <h3>Portfolio Performance</h3>
+                            <div class="chart-filters">
+                                <button class="filter-btn active" data-period="1M">1M</button>
+                                <button class="filter-btn" data-period="3M">3M</button>
+                                <button class="filter-btn" data-period="6M">6M</button>
+                                <button class="filter-btn" data-period="1Y">1Y</button>
+                                <button class="filter-btn" data-period="ALL">ALL</button>
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="performanceChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Asset Allocation</h3>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="allocationChart"></canvas>
+                        </div>
+                        <div class="allocation-legend" id="allocationLegend"></div>
+                    </div>
+                </div>
+
+                <!-- Data Tables Section -->
+                <div class="tables-section">
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3>Top Performing Clients</h3>
+                            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="data-table" id="topClientsTable"></div>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3>Recent Transactions</h3>
+                            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="data-table" id="recentTransactionsTable"></div>
+                    </div>
+                </div>
+
+                <!-- Additional Metrics -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h4>Asset Distribution</h4>
+                        </div>
+                        <div class="metric-content">
+                            <div class="metric-item">
+                                <span class="metric-label">Equity</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 45%"></div>
+                                </div>
+                                <span class="metric-value">45%</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">Debt</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 25%"></div>
+                                </div>
+                                <span class="metric-value">25%</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">Gold</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 12%"></div>
+                                </div>
+                                <span class="metric-value">12%</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">Real Estate</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 10%"></div>
+                                </div>
+                                <span class="metric-value">10%</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">Crypto</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 8%"></div>
+                                </div>
+                                <span class="metric-value">8%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h4>Risk Analysis</h4>
+                        </div>
+                        <div class="risk-meters">
+                            <div class="risk-meter">
+                                <canvas id="riskGauge1"></canvas>
+                                <div class="risk-label">Portfolio Risk</div>
+                                <div class="risk-value">Moderate</div>
+                            </div>
+                            <div class="risk-meter">
+                                <canvas id="riskGauge2"></canvas>
+                                <div class="risk-label">Market Volatility</div>
+                                <div class="risk-value">Low</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h4>Monthly Comparison</h4>
+                        </div>
+                        <canvas id="monthlyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clients Page -->
+            <div class="page-content hidden" id="clients-page">
+                <div class="page-header">
+                    <h2>Client Management</h2>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add New Client
+                    </button>
+                </div>
+                
+                <div class="filters-bar">
+                    <div class="filter-group">
+                        <label>Filter by:</label>
+                        <select class="filter-select">
+                            <option>All Clients</option>
+                            <option>High Net Worth</option>
+                            <option>Regular</option>
+                            <option>New</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Sort by:</label>
+                        <select class="filter-select">
+                            <option>Portfolio Value</option>
+                            <option>Name</option>
+                            <option>Returns</option>
+                            <option>Join Date</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="clients-grid" id="clientsGrid"></div>
+            </div>
+
+            <!-- Portfolio Page -->
+            <div class="page-content hidden" id="portfolio-page">
+                <div class="page-header">
+                    <h2>Portfolio Overview</h2>
+                    <div class="header-actions">
+                        <button class="btn btn-primary" id="addAssetBtn">
+                            <i class="fas fa-plus"></i> Add Asset
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                        <button class="btn btn-secondary" onclick="initPortfolioPage()">
+                            <i class="fas fa-sync"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <div class="portfolio-summary">
+                    <div class="portfolio-card">
+                        <h3>Total Portfolio Value</h3>
+                        <div class="portfolio-value" id="totalPortfolioValue">₹124.5 Cr</div>
+                        <div class="portfolio-change positive">+₹8.2 Cr (7.1%)</div>
+                    </div>
+                    <div class="portfolio-card">
+                        <h3>Total Invested</h3>
+                        <div class="portfolio-value" id="totalInvested">₹98.3 Cr</div>
+                    </div>
+                    <div class="portfolio-card">
+                        <h3>Total Gains</h3>
+                        <div class="portfolio-value positive" id="totalGains">₹26.2 Cr</div>
+                        <div class="portfolio-change" id="totalReturns">26.67% Returns</div>
+                    </div>
+                </div>
+
+                <div class="portfolio-details-table" id="portfolioTable"></div>
+            </div>
+
+            <!-- Transactions Page -->
+            <div class="page-content hidden" id="transactions-page">
+                <div class="page-header">
+                    <h2>Transaction History</h2>
+                    <div class="header-actions">
+                        <input type="date" class="date-input" id="transactionDate">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-filter"></i> Filter
+                        </button>
+                    </div>
+                </div>
+
+                <div class="transaction-stats">
+                    <div class="stat-box">
+                        <div class="stat-label">Total Buy Orders</div>
+                        <div class="stat-value">₹45.2 Cr</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Total Sell Orders</div>
+                        <div class="stat-value">₹32.8 Cr</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Net Flow</div>
+                        <div class="stat-value positive">₹12.4 Cr</div>
+                    </div>
+                </div>
+
+                <div class="transactions-table" id="transactionsTable"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Asset Modal -->
+    <div class="modal" id="addAssetModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Asset</h3>
+                <button class="modal-close" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addAssetForm">
+                    <div class="form-group">
+                        <label for="assetName">Asset Name *</label>
+                        <input type="text" id="assetName" placeholder="e.g., Apple Inc, HDFC Bank" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="assetCategory">Category *</label>
+                            <select id="assetCategory" required>
+                                <option value="">Select Category</option>
+                                <option value="Equity">Equity</option>
+                                <option value="Debt">Debt</option>
+                                <option value="Gold">Gold</option>
+                                <option value="Real Estate">Real Estate</option>
+                                <option value="Crypto">Crypto</option>
+                                <option value="Mutual Fund">Mutual Fund</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="assetQuantity">Quantity *</label>
+                            <input type="number" id="assetQuantity" placeholder="e.g., 100" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="avgPrice">Average Price (₹) *</label>
+                            <input type="number" id="avgPrice" placeholder="e.g., 1500" step="0.01" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="currentPrice">Current Price (₹) *</label>
+                            <input type="number" id="currentPrice" placeholder="e.g., 1650" step="0.01" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add Asset
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
